@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbjsxkh2ssx0y"]
+
+[ext_resource type="Script" uid="uid://bwgck27xub3pm" path="res://scripts/heart_container.gd" id="1_nt7q6"]
+[ext_resource type="PackedScene" uid="uid://bqpwp7nvmbqmy" path="res://scenes/heart_gui.tscn" id="2_x4jx1"]
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="HeartContainer" type="HBoxContainer" parent="."]
+offset_left = 12.0
+offset_top = 15.0
+offset_right = 12.0
+offset_bottom = 15.0
+scale = Vector2(5, 5)
+script = ExtResource("1_nt7q6")
+heart_template = ExtResource("2_x4jx1")
