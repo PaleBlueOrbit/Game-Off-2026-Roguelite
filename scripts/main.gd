@@ -2,6 +2,9 @@ extends Node2D
 
 @export_file("*.tscn") var next_scene_path: String
 
+func _ready() -> void:
+	randomize()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		if next_scene_path != "":

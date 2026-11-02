@@ -772,7 +772,13 @@ tile_map_data = PackedByteArray("AAAAAPv/AAACAAMAAAD///v/AAACAAMAAAD+//v/AAACAAM
 tile_set = SubResource("TileSet_e3sih")
 
 [node name="spawn_point" parent="." index="2"]
-position = Vector2(-72, 24)
+position = Vector2(-20, -33)
 
 [node name="Slime" parent="." index="3" instance=ExtResource("5_4nkto")]
 position = Vector2(24, 22)
+
+[node name="Slime2" parent="." index="4" instance=ExtResource("5_4nkto")]
+position = Vector2(-55, 43)
+
+[node name="Soldier" parent="." index="5"]
+position = Vector2(-209, -79)

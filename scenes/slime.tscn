@@ -1,10 +1,25 @@
-[gd_scene load_steps=8 format=3 uid="uid://p8tapsvgdyqn"]
+[gd_scene load_steps=14 format=3 uid="uid://p8tapsvgdyqn"]
 
 [ext_resource type="Script" uid="uid://c5410c03rery6" path="res://scripts/slime.gd" id="1_2npkn"]
 [ext_resource type="Texture2D" uid="uid://cj3o63hmegvs4" path="res://assets/slime/swampy_anim_f0.png" id="1_pjw23"]
 [ext_resource type="Texture2D" uid="uid://cm1taa8vtby45" path="res://assets/slime/swampy_anim_f1.png" id="2_2npkn"]
+[ext_resource type="Shader" uid="uid://b245reg2b0i52" path="res://assets/slime_shader.gdshader" id="2_fd6lc"]
 [ext_resource type="Texture2D" uid="uid://b5dkwhd5lkrbu" path="res://assets/slime/swampy_anim_f2.png" id="3_fd6lc"]
 [ext_resource type="Texture2D" uid="uid://ks7r6xfu0q34" path="res://assets/slime/swampy_anim_f3.png" id="4_gstla"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2npkn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fd6lc"]
+bg_color = Color(0.57683, 0, 0.134829, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2npkn"]
+resource_local_to_scene = true
+shader = ExtResource("2_fd6lc")
+shader_parameter/base_palette = PackedColorArray(0.596078, 0.854902, 0.25098, 1, 0.282353, 0.654902, 0.564706, 1, 0.254902, 0.439216, 0.533333, 1, 0.133333, 0.133333, 0.133333, 1)
+shader_parameter/target_palette = PackedColorArray(0.596078, 0.854902, 0.25098, 1, 0.282353, 0.654902, 0.564706, 1, 0.254902, 0.439216, 0.533333, 1, 0.133333, 0.133333, 0.133333, 1)
+shader_parameter/precision = 0.01
+shader_parameter/flash_color = Color(1, 0, 0, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v5wyi"]
 animations = [{
@@ -29,15 +44,53 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_0l8pv"]
 radius = 5.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2npkn"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fd6lc"]
+radius = 6.0
+
 [node name="Slime" type="Area2D"]
+z_index = 5
 script = ExtResource("1_2npkn")
 damage_amount = 1
 
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -6.0
+offset_top = -9.0
+offset_right = 6.0
+offset_bottom = -7.0
+theme_override_styles/background = SubResource("StyleBoxFlat_2npkn")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fd6lc")
+show_percentage = false
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_2npkn")
 sprite_frames = SubResource("SpriteFrames_v5wyi")
 autoplay = "default"
 frame_progress = 0.383045
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_0l8pv")
+
+[node name="HurtBox" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_2npkn")
+
+[node name="HitBox" type="Area2D" parent="."]
+visible = false
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_fd6lc")
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
