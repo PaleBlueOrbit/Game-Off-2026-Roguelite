@@ -16,6 +16,7 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	health_bar.value = health
 	
+	
 func _on_body_exited(body: Node2D) -> void:
 	if body == player_inside:
 		player_inside = null
@@ -34,9 +35,12 @@ func take_damage() -> void:
 	
 	var mat = sprite.material as ShaderMaterial
 	if mat:
-		var tween = create_tween()
+		print("activating shader")
 		mat.set_shader_parameter("flash_modifier", 1.0)
+		var tween = create_tween()
 		tween.tween_property(mat, "shader_parameter/flash_modifier", 0.0, 0.15)
+	else:
+		print("shader error")
 	
 	print("slimes health = ", health)
 	if health <= 0:

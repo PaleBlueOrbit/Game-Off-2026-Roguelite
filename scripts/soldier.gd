@@ -51,7 +51,7 @@ func attack() -> void:
 	attack_timer.start()
 	is_attacking = true
 	sprite.play("sword_side")
-	
+	await get_tree().create_timer(0.3).timeout
 	attack_box.set_deferred("disabled", false)
 	await sprite.animation_finished
 	is_attacking = false
@@ -62,7 +62,7 @@ func _on_attack_timer_timeout() -> void:
 	print("Ready to attack again!")
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and can_attack:
+	if event.is_action_pressed("attack") and can_attack:
 		attack()
 
 func _physics_process(delta: float) -> void:
