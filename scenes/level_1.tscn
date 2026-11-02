@@ -782,3 +782,14 @@ position = Vector2(-55, 43)
 
 [node name="Soldier" parent="." index="5"]
 position = Vector2(-209, -79)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." index="7"]
+offset_left = -56.0
+offset_top = -127.0
+offset_right = 46.0
+offset_bottom = -87.0
+theme_override_font_sizes/normal_font_size = 8
+text = "Tab for next Level
+F to shoot arrow
+Click to attack
+"

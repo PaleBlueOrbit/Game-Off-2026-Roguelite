@@ -4,7 +4,10 @@ extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_timer: Timer = $AttackTimer
+@onready var arrow_timer: Timer = $ArrowTimer
 @onready var attack_box: CollisionShape2D = $AnimatedSprite2D/HitBox/CollisionShape2D
+@onready var ray_cast: RayCast2D = $AnimatedSprite2D/RayCast2D
+
 
 var is_dead: bool = false
 var is_attacking: bool = false
@@ -61,9 +64,33 @@ func _on_attack_timer_timeout() -> void:
 	can_attack = true
 	print("Ready to attack again!")
 
+func arrow() -> void:
+	can_attack = false
+	attack_timer.start()
+	is_attacking = true
+	sprite.play("arrow")
+	await sprite.animation_finished
+	ray_cast.force_raycast_update()
+	if ray_cast.is_colliding():
+		print("ray cast is colliding")
+		var collider = ray_cast.get_collider()
+		if collider.get_parent().has_method("take_damage"):
+			collider.get_parent().take_damage()
+			print("Hit enemy instantly: ", collider.name)
+		else:
+			print("no damage function")
+	else:
+		print("ray cast not colliding")
+	is_attacking = false
+	
+	
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack") and can_attack:
 		attack()
+	elif event.is_action_pressed("arrow") and can_attack:
+		arrow()
 
 func _physics_process(delta: float) -> void:
 	if is_dead:

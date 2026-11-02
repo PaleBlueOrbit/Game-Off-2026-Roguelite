@@ -4,7 +4,7 @@ extends Node
 #global variables
 var max_health: int = 6
 var player_health: int = max_health
-var attack_cooldown: float = 1.0
+var attack_cooldown: float = 0.75
 var player_damage = 1
 var crit_chance: float = 35
 
