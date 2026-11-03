@@ -1,11 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://p8tapsvgdyqn"]
+[gd_scene load_steps=18 format=3 uid="uid://p8tapsvgdyqn"]
 
 [ext_resource type="Script" uid="uid://c5410c03rery6" path="res://scripts/slime.gd" id="1_2npkn"]
 [ext_resource type="Texture2D" uid="uid://cj3o63hmegvs4" path="res://assets/slime/swampy_anim_f0.png" id="1_pjw23"]
 [ext_resource type="Texture2D" uid="uid://cm1taa8vtby45" path="res://assets/slime/swampy_anim_f1.png" id="2_2npkn"]
 [ext_resource type="Shader" uid="uid://b245reg2b0i52" path="res://assets/slime_shader.gdshader" id="2_fd6lc"]
 [ext_resource type="Texture2D" uid="uid://b5dkwhd5lkrbu" path="res://assets/slime/swampy_anim_f2.png" id="3_fd6lc"]
+[ext_resource type="Texture2D" uid="uid://gbdm83h1krqh" path="res://assets/slime/swampy_attack_f1.png" id="3_vnioy"]
+[ext_resource type="Texture2D" uid="uid://b6vp7ih11u0l" path="res://assets/slime/swampy_attack_f2.png" id="4_2xjuo"]
 [ext_resource type="Texture2D" uid="uid://ks7r6xfu0q34" path="res://assets/slime/swampy_anim_f3.png" id="4_gstla"]
+[ext_resource type="Texture2D" uid="uid://c0u5sogba6gua" path="res://assets/slime/swampy_attack_f3.png" id="5_a02ik"]
+[ext_resource type="Texture2D" uid="uid://bd7d0xhaid2q7" path="res://assets/slime/swampy_attack_f4.png" id="6_pu8ps"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2npkn"]
 
@@ -23,6 +27,23 @@ shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v5wyi"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_vnioy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2xjuo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_a02ik")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pu8ps")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 16.0
+}, {
 "frames": [{
 "duration": 2.0,
 "texture": ExtResource("1_pjw23")
@@ -67,8 +88,12 @@ show_percentage = false
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_2npkn")
 sprite_frames = SubResource("SpriteFrames_v5wyi")
+animation = &"attack"
 autoplay = "default"
-frame_progress = 0.383045
+
+[node name="AttackBox" type="Area2D" parent="AnimatedSprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/AttackBox"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -92,5 +117,8 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_fd6lc")
+
+[node name="AttackTimer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

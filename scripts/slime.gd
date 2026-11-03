@@ -1,20 +1,26 @@
 extends Area2D
 
-@export var damage_amount: int = 15
-@export var damage_rate: float = 1.0
+@export var damage_amount: int = 2
+@export var damage_rate: float = 3.0
 
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var sprite = $AnimatedSprite2D
+@onready var attack_timer = $AttackTimer
 
 var player_inside: Node2D = null
 var damage_timer: float = 0.0
 var max_health: int = 4
 var health: int = max_health
+var is_attacking: bool = false
 
 func _ready() -> void:
 	body_exited.connect(_on_body_exited)
 	health_bar.max_value = max_health
 	health_bar.value = health
+	attack_timer.wait_time = damage_rate
+	attack_timer.one_shot = false
+	attack_timer.autostart = true
+	attack_timer.timeout.connect(_on_attack_timer_timeout)
 	
 	
 func _on_body_exited(body: Node2D) -> void:
@@ -25,8 +31,23 @@ func _on_body_exited(body: Node2D) -> void:
 func _process(delta: float) -> void:
 	pass
 		
+func _on_attack_timer_timeout() -> void:
+	attack()
+	
 func die() -> void:
 	queue_free()
+
+func attack() -> void:
+	is_attacking = true
+	sprite.offset.x = 8
+	sprite.play("attack")
+	await sprite.animation_finished
+	sprite.speed_scale = 2.0
+	sprite.play_backwards("attack")
+	await sprite.animation_finished
+	sprite.speed_scale = 1
+	sprite.offset.x = 0
+	sprite.play("default")
 
 func take_damage() -> void:
 	health -= Global.calculate_damage()
