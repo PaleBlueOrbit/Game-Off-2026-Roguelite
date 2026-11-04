@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://p8tapsvgdyqn"]
+[gd_scene load_steps=19 format=3 uid="uid://p8tapsvgdyqn"]
 
 [ext_resource type="Script" uid="uid://c5410c03rery6" path="res://scripts/slime.gd" id="1_2npkn"]
 [ext_resource type="Texture2D" uid="uid://cj3o63hmegvs4" path="res://assets/slime/swampy_anim_f0.png" id="1_pjw23"]
@@ -71,6 +71,9 @@ radius = 9.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_fd6lc"]
 radius = 6.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_vnioy"]
+radius = 21.3776
+
 [node name="Slime" type="Area2D"]
 z_index = 5
 script = ExtResource("1_2npkn")
@@ -88,7 +91,6 @@ show_percentage = false
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_2npkn")
 sprite_frames = SubResource("SpriteFrames_v5wyi")
-animation = &"attack"
 autoplay = "default"
 
 [node name="AttackBox" type="Area2D" parent="AnimatedSprite2D"]
@@ -96,12 +98,10 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/AttackBox"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_0l8pv")
 
 [node name="HurtBox" type="Area2D" parent="."]
-visible = false
 collision_layer = 8
 collision_mask = 8
 
@@ -110,7 +110,6 @@ position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_2npkn")
 
 [node name="HitBox" type="Area2D" parent="."]
-visible = false
 collision_layer = 16
 collision_mask = 0
 
@@ -121,4 +120,13 @@ shape = SubResource("CircleShape2D_fd6lc")
 [node name="AttackTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_vnioy")
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]

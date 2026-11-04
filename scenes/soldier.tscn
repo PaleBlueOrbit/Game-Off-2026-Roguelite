@@ -352,6 +352,8 @@ radius = 6.08276
 
 [node name="Soldier" type="CharacterBody2D"]
 z_index = 10
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_q2rr1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -360,6 +362,7 @@ animation = &"run"
 autoplay = "idle"
 
 [node name="HitBox" type="Area2D" parent="AnimatedSprite2D"]
+visible = false
 position = Vector2(10, 0)
 collision_layer = 8
 collision_mask = 0
@@ -386,6 +389,7 @@ one_shot = true
 [node name="HitTimer" type="Timer" parent="."]
 
 [node name="HurtBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 16
 

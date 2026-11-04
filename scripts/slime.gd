@@ -12,6 +12,8 @@ var damage_timer: float = 0.0
 var max_health: int = 4
 var health: int = max_health
 var is_attacking: bool = false
+var can_attack: bool = true
+var player_in_range: bool = false
 
 func _ready() -> void:
 	body_exited.connect(_on_body_exited)
@@ -29,22 +31,25 @@ func _on_body_exited(body: Node2D) -> void:
 		damage_timer = 0.0
 
 func _process(delta: float) -> void:
-	pass
+	if player_in_range and can_attack and !is_attacking:
+		attack()
 		
 func _on_attack_timer_timeout() -> void:
-	attack()
+	can_attack = true
 	
 func die() -> void:
 	queue_free()
 
 func attack() -> void:
 	is_attacking = true
+	can_attack = false
 	sprite.offset.x = 8
 	sprite.play("attack")
 	await sprite.animation_finished
 	sprite.speed_scale = 2.0
 	sprite.play_backwards("attack")
 	await sprite.animation_finished
+	is_attacking = false
 	sprite.speed_scale = 1
 	sprite.offset.x = 0
 	sprite.play("default")
@@ -70,3 +75,13 @@ func take_damage() -> void:
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	take_damage()
+
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	player_in_range = true
+	print("player in range")
+
+
+func _on_attack_area_body_exited(body: Node2D) -> void:
+	player_in_range = false
+	print("player not in range")
