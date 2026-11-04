@@ -28,6 +28,8 @@ func _ready() -> void:
 	check_enemies()
 
 func unlock_level() -> void:
+	if has_node("SmokeParticles"):
+		$SmokeParticles.emitting = true
 	print("tiles to change: ", tiles_to_change)
 	for coords in tiles_to_change:
 		floor_layer.set_cell(coords, replacement_source_id, replacement_atlas_coords)
