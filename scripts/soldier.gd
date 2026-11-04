@@ -30,7 +30,7 @@ func take_damage(amount: int) -> void:
 	
 	
 	Global.player_health -= amount
-	print("You took ", amount, "damage", "  New Health: ", Global.player_health)
+	#print("You took ", amount, "damage", "  New Health: ", Global.player_health)
 	
 	Global.health_changed.emit(Global.player_health, Global.max_health)
 	if Global.player_health <= 0:
@@ -62,7 +62,7 @@ func attack() -> void:
 	
 func _on_attack_timer_timeout() -> void:
 	can_attack = true
-	print("Ready to attack again!")
+	#print("Ready to attack again!")
 
 func arrow() -> void:
 	can_attack = false
@@ -72,15 +72,17 @@ func arrow() -> void:
 	await sprite.animation_finished
 	ray_cast.force_raycast_update()
 	if ray_cast.is_colliding():
-		print("ray cast is colliding")
+		#print("ray cast is colliding")
 		var collider = ray_cast.get_collider()
 		if collider.get_parent().has_method("take_damage"):
 			collider.get_parent().take_damage()
-			print("Hit enemy instantly: ", collider.name)
+			#print("Hit enemy instantly: ", collider.name)
 		else:
-			print("no damage function")
+			#print("no damage function")
+			pass
 	else:
-		print("ray cast not colliding")
+		#print("ray cast not colliding")
+		pass
 	is_attacking = false
 	
 	

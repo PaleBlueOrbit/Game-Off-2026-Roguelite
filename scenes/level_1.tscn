@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://ccei22vve3bmx"]
+[gd_scene load_steps=13 format=4 uid="uid://ccei22vve3bmx"]
 
 [ext_resource type="PackedScene" uid="uid://dpjdfjbucmdvy" path="res://scenes/base_level.tscn" id="1_5xbjy"]
 [ext_resource type="Texture2D" uid="uid://ckcfkdx1rb8n1" path="res://assets/atlas_floor-16x16.png" id="1_rus8k"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b4ki32e1cht2k" path="res://assets/atlas_walls_low-16x16.png" id="3_4nkto"]
 [ext_resource type="PackedScene" uid="uid://p8tapsvgdyqn" path="res://scenes/slime.tscn" id="5_4nkto"]
 [ext_resource type="FontFile" uid="uid://bgt733dikftc1" path="res://assets/fonts/Micro5-Regular.ttf" id="6_fcfvj"]
+[ext_resource type="PackedScene" uid="uid://dertmhqjpeivo" path="res://scenes/smoke_particles.tscn" id="7_pa8r4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4nkto"]
 texture = ExtResource("1_rus8k")
@@ -763,6 +764,9 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_15mv3")
 
 [node name="Level 1" instance=ExtResource("1_5xbjy")]
+replacement_atlas_coords = Vector2i(2, 2)
+tiles_to_change = Array[Vector2i]([Vector2i(-1, 2), Vector2i(-1, -2)])
+next_level_path = "uid://ci1627dbf14x4"
 
 [node name="Floor" type="TileMapLayer" parent="." index="0"]
 tile_map_data = PackedByteArray("AAD9//z/AAACAAAAAAD9//3/AAAAAAAAAAD+//3/AAABAAEAAAD+//z/AAAAAAAAAAD///z/AAABAAEAAAAAAPz/AAABAAEAAAAAAP3/AAACAAAAAAD///3/AAAAAAAAAAAAAP7/AAAAAAAAAAD///7/AAACAAAAAAD+//7/AAAAAAAAAAD9//7/AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAABAAEAAAD/////AAAAAAAAAAD//wAAAAAAAAAAAAD9/wAAAAAAAAAAAAD8/wAAAAAAAAAAAAD7/wAAAAAAAAAAAAD7/wEAAAAAAAAAAAD7/wIAAAAAAAAAAAD7/wMAAAAAAAAAAAD8/wMAAAABAAAAAAD9/wIAAAAAAAAAAAD+/wIAAAAAAAAAAAD//wIAAAAAAAAAAAAAAAIAAAABAAAAAAABAAIAAAAAAAAAAAABAAMAAAABAAEAAAACAAIAAAABAAEAAAABAAEAAAABAAAAAAABAAAAAAABAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAD//wMAAAAAAAAAAAD+/wMAAAABAAAAAAD9/wMAAAAAAAAAAAD8/wIAAAABAAEAAAD8/wEAAAAAAAAAAAD9/wEAAAABAAAAAAD+/wEAAAAAAAAAAAD//wEAAAACAAAAAAAAAAEAAAAAAAAAAAABAPz/AAAFAAUAAAABAP3/AAAFAAUAAAABAP7/AAAFAAUAAAD8//7/AAAEAAUAAAD8//3/AAAEAAUAAAD8//z/AAAEAAUAAAD9////AAAEAAUAAAAAAP//AAAFAAUAAAD6/wAAAAAEAAUAAAD6/wEAAAAEAAUAAAD6/wIAAAAEAAUAAAD6/wMAAAAEAAUAAAADAAAAAAAFAAUAAAADAAEAAAAFAAUAAAADAAIAAAAFAAUAAAADAAMAAAAFAAUAAAA=")
@@ -773,7 +777,7 @@ tile_map_data = PackedByteArray("AAAAAPv/AAACAAMAAAD///v/AAACAAMAAAD+//v/AAACAAM
 tile_set = SubResource("TileSet_e3sih")
 
 [node name="spawn_point" parent="." index="2"]
-position = Vector2(-20, -33)
+position = Vector2(-28, -44)
 
 [node name="Slime" parent="." index="3" instance=ExtResource("5_4nkto")]
 position = Vector2(24, 22)
@@ -795,3 +799,6 @@ text = "Tab for next Level
 F to shoot arrow
 Click to attack
 "
+
+[node name="SmokeParticles" parent="." index="8" instance=ExtResource("7_pa8r4")]
+position = Vector2(-8, 40)

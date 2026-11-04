@@ -9,7 +9,7 @@ var player_damage = 1
 var crit_chance: float = 35
 
 signal health_changed(current: int, max_health: int)
-
+signal level_completed(next_level_file_path: String)
 
 
 #to be added:
@@ -20,7 +20,7 @@ var reach: float = 100.0
 
 func calculate_damage() -> int:
 	if randf_range(0.0, 100.0) <= crit_chance:
-		print("Critical Hit!")
+		#print("Critical Hit!")
 		return player_damage * 2.0
 	else:
 		return player_damage

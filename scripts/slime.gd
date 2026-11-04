@@ -24,7 +24,6 @@ func _ready() -> void:
 	attack_timer.autostart = true
 	attack_timer.timeout.connect(_on_attack_timer_timeout)
 	
-	
 func _on_body_exited(body: Node2D) -> void:
 	if body == player_inside:
 		player_inside = null
@@ -37,7 +36,12 @@ func _process(delta: float) -> void:
 func _on_attack_timer_timeout() -> void:
 	can_attack = true
 	
+	
 func die() -> void:
+	remove_from_group("enemies")
+	var levels = get_tree().get_nodes_in_group("current_level")
+	if levels.size() > 0:
+		levels[0].check_enemies()
 	queue_free()
 
 func attack() -> void:
@@ -61,14 +65,14 @@ func take_damage() -> void:
 	
 	var mat = sprite.material as ShaderMaterial
 	if mat:
-		print("activating shader")
+		#print("activating shader")
 		mat.set_shader_parameter("flash_modifier", 1.0)
 		var tween = create_tween()
 		tween.tween_property(mat, "shader_parameter/flash_modifier", 0.0, 0.15)
 	else:
 		print("shader error")
 	
-	print("slimes health = ", health)
+	#print("slimes health = ", health)
 	if health <= 0:
 		die()
 
@@ -79,9 +83,9 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	player_in_range = true
-	print("player in range")
+	#print("player in range")
 
 
 func _on_attack_area_body_exited(body: Node2D) -> void:
 	player_in_range = false
-	print("player not in range")
+	#print("player not in range")

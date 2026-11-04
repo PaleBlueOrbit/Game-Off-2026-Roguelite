@@ -8,3 +8,4 @@ script = ExtResource("1_sugp2")
 next_scene_path = "uid://ci1627dbf14x4"
 
 [node name="Level 1" parent="." instance=ExtResource("2_0wfyh")]
+tiles_to_change = Array[Vector2i]([Vector2i(-1, 2)])
